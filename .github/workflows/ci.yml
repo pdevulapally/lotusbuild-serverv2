@@ -25,6 +25,8 @@ jobs:
       HTTP_DEFAULT_TIMEOUT_SECONDS: "10"
       CIRCUIT_BREAKER_FAIL_MAX: "5"
       CIRCUIT_BREAKER_RESET_TIMEOUT_SECONDS: "30"
+      FIREBASE_PROJECT_ID: ci-test-project
+      TENANT_CACHE_TTL_SECONDS: "30"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -37,7 +39,7 @@ jobs:
       - name: Type check
         run: mypy app
       - name: Unit tests
-        run: pytest -q
+        run: pytest tests/unit -q
 
   deploy:
     name: Deploy to VPS

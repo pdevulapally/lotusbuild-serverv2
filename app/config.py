@@ -25,5 +25,8 @@ class Settings(BaseSettings):
     circuit_breaker_fail_max: int
     circuit_breaker_reset_timeout_seconds: int
 
+    firebase_project_id: str
+    tenant_cache_ttl_seconds: float
+
 
 settings = Settings()

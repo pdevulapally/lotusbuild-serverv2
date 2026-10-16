@@ -11,6 +11,8 @@ dependencies = [
     "arq>=0.26",
     "tenacity>=9.0",
     "pybreaker>=1.2",
+    "firebase-admin>=6.5",
+    "google-cloud-firestore>=2.19",
 ]
 
 [project.optional-dependencies]
@@ -35,6 +37,15 @@ target-version = "py312"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
+
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = [
+    "fastapi.Depends",
+    "fastapi.Header",
+    "fastapi.Query",
+    "fastapi.Path",
+    "app.api.deps.require_role",
+]
 
 [tool.mypy]
 python_version = "3.12"

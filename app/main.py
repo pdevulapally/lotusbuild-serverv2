@@ -9,6 +9,8 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from app.api.v1.auth import router as auth_router
+from app.api.v1.orgs import router as orgs_router
 from app.config import settings
 from app.core.errors import register_exception_handlers
 from app.core.redis_client import close_redis, get_redis
@@ -24,6 +26,8 @@ async def lifespan(_app: FastAPI) -> AsyncGenerator[None]:
 def create_app() -> FastAPI:
     app = FastAPI(title="Lotusbuild Backend", version="0.1.0", lifespan=lifespan)
     register_exception_handlers(app)
+    app.include_router(auth_router, prefix="/api/v1")
+    app.include_router(orgs_router, prefix="/api/v1")
 
     @app.get("/healthz")
     async def healthz() -> dict[str, str]:
