@@ -24,7 +24,21 @@ docker compose up -d --build
 ```
 
 This brings up three services: `redis`, `app` (the FastAPI server, port 8000), and `worker` (the
-arq background-job worker). `GET /healthz` confirms the app is up and can reach Redis.
+arq background-job worker). `GET /healthz` confirms the app is up and can reach Redis. Interactive
+API docs are at `/docs` once the app is running.
+
+## API (so far)
+
+- `GET /api/v1/auth/me` — bootstraps/returns the caller's Firestore profile.
+- `POST /api/v1/orgs` — create an org (caller becomes its owner).
+- `GET /api/v1/orgs/{org_id}`, `GET /api/v1/orgs/{org_id}/members` — any member.
+- `POST /api/v1/orgs/{org_id}/members` (invite), `DELETE .../members/{id}` (remove) — admin+.
+- `PATCH /api/v1/orgs/{org_id}/members/{id}` (change role) — owner only.
+
+Every one of these requires `Authorization: Bearer <firebase-id-token>`.
+
+Run `pytest tests/integration` **on the VPS** (never in CI — it needs real credentials) to
+exercise the full create → invite → role-gated-access flow against the real Firestore project.
 
 ## Repository layout
 
