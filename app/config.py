@@ -10,16 +10,20 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    """No field below has a default. A missing environment variable must fail
+    startup loudly, not silently fall back to a guessed value.
+    """
+
     model_config = SettingsConfigDict(env_file=".env", extra="ignore")
 
-    environment: str = "development"
-    log_level: str = "INFO"
+    environment: str
+    log_level: str
 
-    redis_url: str = "redis://localhost:6379/0"
+    redis_url: str
 
-    http_default_timeout_seconds: float = 10.0
-    circuit_breaker_fail_max: int = 5
-    circuit_breaker_reset_timeout_seconds: int = 30
+    http_default_timeout_seconds: float
+    circuit_breaker_fail_max: int
+    circuit_breaker_reset_timeout_seconds: int
 
 
 settings = Settings()

@@ -19,7 +19,12 @@ jobs:
           --health-timeout 3s
           --health-retries 5
     env:
+      ENVIRONMENT: test
+      LOG_LEVEL: INFO
       REDIS_URL: redis://localhost:6379/0
+      HTTP_DEFAULT_TIMEOUT_SECONDS: "10"
+      CIRCUIT_BREAKER_FAIL_MAX: "5"
+      CIRCUIT_BREAKER_RESET_TIMEOUT_SECONDS: "30"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
